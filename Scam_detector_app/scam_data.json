@@ -1,0 +1,20 @@
+{
+    "scam_keywords": [
+        "urgent",
+        "pay now",
+        "click here",
+        "verify account",
+        "suspended"
+    ],
+    "suspicious_links": [
+        "bit.ly",
+        "tinyurl",
+        "shorturl",
+        "is.gd"
+    ],
+    "fake_numbers": [
+        "+1234567890",
+        "+1800123456",
+        "226 60599729"
+    ]
+}

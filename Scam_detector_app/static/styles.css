@@ -1,0 +1,161 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 20px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+nav {
+    margin: 20px 0;
+}
+
+nav a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+.login-form {
+    margin: 20px 0;
+}
+
+.login-form input {
+    padding: 8px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.login-form button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.flash-messages {
+    margin: 20px 0;
+}
+
+.flash {
+    padding: 10px;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin: 5px 0;
+}
+
+.ads {
+    display: flex;
+    flex-direction: column;  /* Changed to column to stack ads vertically */
+    align-items: center;     /* Center ads horizontally */
+    margin: 20px 0;
+    gap: 20px;
+}
+
+.ad-slot {
+    border: 2px solid #ccc;
+    padding: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 970px;           /* Updated width */
+    height: 250px;          /* Height remains the same */
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.ad-slot:hover {
+    transform: scale(1.01); /* Reduced scale effect due to larger size */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ad-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* For animated GIFs */
+.ad-slot img[src$=".gif"] {
+    object-fit: contain;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 1024px) {
+    .ad-slot {
+        width: 100%;
+        max-width: 970px;
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ad-slot {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        min-height: 150px;
+    }
+}
+
+.scan-form {
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+.scan-form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.scan-form button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.result.scam {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+}
+
+.result.safe {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+}
+
+@media (max-width: 768px) {
+    .ads {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .ad-slot {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 20px;
+    }
+}
+

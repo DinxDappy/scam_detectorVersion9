@@ -1,0 +1,14 @@
+[
+    {
+        "img": "ads/ad1.jpg",
+        "link": "https://example.com/product1"
+    },
+    {
+        "img": "ads/ad2.jpg",
+        "link": "https://example.com/product2"
+    },
+    {
+        "img": "ads/ad3.gif",
+        "link": "https://example.com/product3"
+    }
+]

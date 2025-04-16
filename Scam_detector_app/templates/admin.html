@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <h1>🔐 Admin Panel</h1>
+        <nav>
+            <a href="/">🏠 Home</a>
+            <a href="/dashboard">📊 Dashboard</a>
+            <a href="/logout">🚪 Logout</a>
+        </nav>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </header>
+
+    <main>
+        <section>
+            <h2>📁 Import Scam Data</h2>
+            <form action="/import" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".json" required>
+                <button type="submit">Upload</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>📤 Export Scam Data</h2>
+            <a href="/export" class="button">Download Scam Data</a>
+        </section>
+
+        <section>
+            <h2>👥 Registered Users</h2>
+            <ul>
+                {% for user in users %}
+                    <li>{{ user }} {% if user == 'admin' %}(Admin){% endif %}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <section>
+            <h2>🛑 All Scam Terms</h2>
+            {% for category, terms in scam_data.items() %}
+                <h3>{{ category.replace('_', ' ').title() }}</h3>
+                <ul>
+                    {% for term in terms %}
+                        <li>{{ term }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </section>
+    </main>
+</body>
+</html>

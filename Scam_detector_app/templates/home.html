@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scam Detector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function rotateAds(ads) {
+            let currentIndex = 0;
+            
+            function updateAd(slotNumber) {
+                const ad = ads[currentIndex];
+                $(`#ad-link-${slotNumber}`).attr('href', ad.link);
+                $(`#ad-img-${slotNumber}`).attr('src', "{{ url_for('static', filename='') }}" + ad.img);
+                
+                // Fade effect
+                $(`#ad-slot-${slotNumber}`).fadeOut(500, function() {
+                    $(this).fadeIn(500);
+                });
+            }
+
+            // Rotate ads every 5 seconds
+            setInterval(() => {
+                currentIndex = (currentIndex + 1) % ads.length;
+                updateAd(1); // Update first ad slot
+                
+                // Update second ad slot with next ad in sequence
+                let secondAdIndex = (currentIndex + 1) % ads.length;
+                let secondAd = ads[secondAdIndex];
+                $(`#ad-link-2`).attr('href', secondAd.link);
+                $(`#ad-img-2`).attr('src', "{{ url_for('static', filename='') }}" + secondAd.img);
+                
+                $(`#ad-slot-2`).fadeOut(500, function() {
+                    $(this).fadeIn(500);
+                });
+            }, 5000);
+        }
+
+        // Initialize ads when document is ready
+        $(document).ready(function() {
+            const ads = {{ ads|tojson|safe }};
+            rotateAds(ads);
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>Welcome to Scam Detector</h1>
+        <nav>
+            {% if 'user' in session %}
+                <span>Welcome, {{ session['user'] }}!</span>
+                <a href="/dashboard">Dashboard</a>
+                {% if session['user'] == 'admin' %}
+                    <a href="/admin">Admin Panel</a>
+                {% endif %}
+                <a href="/logout">Logout</a>
+            {% else %}
+                <div class="login-form">
+                    <form action="/login" method="POST">
+                        <input type="text" name="username" placeholder="Username" required>
+                        <input type="password" name="password" placeholder="Password" required>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
+            {% endif %}
+        </nav>
+        <p>Protect yourself from online scams by using our scam detection service.</p>
+    </div>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for message in messages %}
+                    <div class="flash">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- Display Ads -->
+    <section class="ads">
+        <div id="ad-slot-1" class="ad-slot">
+            <a id="ad-link-1" href="{{ ads[0]['link'] }}" target="_blank">
+                <img id="ad-img-1" src="{{ url_for('static', filename=ads[0]['img']) }}" alt="Advertisement 1">
+            </a>
+        </div>
+
+        <div id="ad-slot-2" class="ad-slot">
+            <a id="ad-link-2" href="{{ ads[1]['link'] }}" target="_blank">
+                <img id="ad-img-2" src="{{ url_for('static', filename=ads[1]['img']) }}" alt="Advertisement 2">
+            </a>
+        </div>
+    </section>
+
+    <section class="scan-form">
+        <form method="POST">
+            <textarea name="message" placeholder="Enter message to scan..." required>{{ message }}</textarea>
+            <button type="submit">Scan Message</button>
+        </form>
+        {% if result %}
+        <div class="result {% if is_scam %}scam{% else %}safe{% endif %}">
+            {{ result }}
+        </div>
+        {% endif %}
+    </section>
+</body>
+</html>
